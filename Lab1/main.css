@@ -1,11 +1,12 @@
 body{
-    max-width: 1000px;
+    max-width: 1200px;
     padding: 0 30px;
     margin: 0 auto;
     zoom: 1;
 }
 h1{
-    font-size: 25px;
+    font-size: 40px;
+    font-weight: 50;
 
 }
 img.harv-img1{
@@ -26,7 +27,8 @@ img.harv-img1{
     margin: 10px;
 }
 #cs171-basics{
-    font-size: 22px;
+    padding: 10px;
+    font-size: 20px;
     color: rgb(0, 0, 0);
     background-color:#a8ddb5;
     border-radius: 7px;;
@@ -35,4 +37,21 @@ img.harv-img1{
 }
 #cs171-basics:hover {
     opacity: 0.6;
+}
+
+.nav{
+    background-color: #f0f0f0;
+    padding: 25px;
+    word-spacing: 20px;
+    border-bottom: 1px solid rgb(182, 182, 182);
+ 
+}
+
+.nav-cs171,.nav-website,.nav-resources{
+    font-size: 18px;
+    color: rgb(97, 97, 97);
+    text-decoration: none;
+}
+.nav-cs171:hover,.nav-website:hover,.nav-resources:hover{
+    text-decoration: underline;
 }
