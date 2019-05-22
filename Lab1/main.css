@@ -1,13 +1,38 @@
+body{
+    max-width: 1000px;
+    padding: 0 30px;
+    margin: 0 auto;
+    zoom: 1;
+}
 h1{
     font-size: 25px;
 
 }
-.harv-img{
+img.harv-img1{
     float: right;
     border: 1px solid gray;
-    padding: 1px;
+    padding: 5px;
+    width:50%;
+
 }
 #content{
-    border: 1px solid black;
-    width: 50%;
+    border: 1px solid rgb(212, 208, 208);
+    background-color: rgb(245, 245, 245);
+    width: 45%;
+}
+.generated-content{
+    background-color: rgb(238, 226, 226);
+    padding: 10px 10px 10px 10px;
+    margin: 10px;
+}
+#cs171-basics{
+    font-size: 22px;
+    color: rgb(0, 0, 0);
+    background-color:#a8ddb5;
+    border-radius: 7px;;
+    opacity: 1;
+    transition: 0.3s;
+}
+#cs171-basics:hover {
+    opacity: 0.6;
 }
