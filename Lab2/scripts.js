@@ -65,3 +65,6 @@ function website_display(array_2){
 }
 
 website_display(amusementRidesDouble);
+
+//Activity - 3 
+
