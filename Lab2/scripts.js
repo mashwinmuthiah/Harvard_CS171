@@ -67,4 +67,24 @@ function website_display(array_2){
 website_display(amusementRidesDouble);
 
 //Activity - 3 
+var products = [
+	{ name: "laptop", price: 800 },
+	{ name: "phone", price:1200},
+    { name: "tv", price: 200},
+    { name: "dvd", price: 500},
+    { name: "vcr", price: 400},
+    { name: "speaker", price: 1100}
+];
 
+// Sort ascending by the 'price' property
+products.sort( function(a, b){
+    return a.price - b.price;
+})
+console.log(products);
+
+// using map functions
+var my_num = [1,2,3,4,5,6,7,8,9];
+var roots = my_num.map(function(element){
+    return element+5;
+});
+console.log(my_num,roots)
