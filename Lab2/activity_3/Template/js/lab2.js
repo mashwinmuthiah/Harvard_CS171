@@ -13,13 +13,13 @@ function dataFiltering(type) {
 	//console.log(attractions);
 	attractions = attractions.filter(function(value,index){
 		if(type=="all"){
-			return true;
+			return type;
 		}
 		else if(value.Category == type){
-			return true;
+			return type;
 		}
 		else {
-			return false
+			return false;
 		}
 	});
 	attractions = attractions.filter(function(value,index){
