@@ -18,7 +18,6 @@ createVisualization();
 function createVisualization() {
 	dd = deliveryData;
 	fd = feedbackData;
-	stats(dd,fd);
 	var selectBox = document.getElementById("user-area");
 	var selectedValue = selectBox.options[selectBox.selectedIndex].value;
 	console.log(selectedValue);
@@ -47,7 +46,7 @@ function createVisualization() {
 			return false;
 		}
 	})
-
+	stats(dd,fd);
 	renderBarChart(dd);
 }
 
