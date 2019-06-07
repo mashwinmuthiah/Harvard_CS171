@@ -11,25 +11,36 @@
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-		<div id="selections-1">
-				<select id="user-area" onchange="createVisualization()">
-					<option value="All">All</option>
-					<option value="Boston">Boston</option>
-					<option value="Cambridge">Cambridge</option>
-					<option value="Somerville">Somerville</option>
-					
-				</select>
+		<header class="wrap">
+			<div id="site-header">CS 171 HomeWork 2</div>
+			<div id="details">Ashwin Muthiah Murugappan</div>
+			<br>
+		</header>
+		<div class="wrap">
+			<div id="selections-1">
+					<div>Select Area : </div>
+					<select id="user-area" onchange="createVisualization()">
+						<option value="All">All</option>
+						<option value="Boston">Boston</option>
+						<option value="Cambridge">Cambridge</option>
+						<option value="Somerville">Somerville</option>
+						
+					</select>
+			</div>
+			<div id="selections-2">
+					<div>Select Order Type : </div>
+					<select id="user-order-type" onchange="createVisualization()">
+						<option value="All">All</option>
+						<option value="web">Web</option>
+						<option value="phone">Phone</option>
+					</select>
+			</div>
+			<br>
+			<div>Some of the Statistics </div><br>
+			<div id="stats"></div><br>
+			<div>Deliveries vs Date</div>
+			<div id="chart-area"></div>
 		</div>
-		<div id="selections-2">
-				<select id="user-order-type" onchange="createVisualization()">
-					<option value="All">All</option>
-					<option value="web">Web</option>
-					<option value="phone">Phone</option>
-				</select>
-		</div>
-		<div id="stats"></div>
-		<div id="chart-area"></div>
-
 	
 	
 

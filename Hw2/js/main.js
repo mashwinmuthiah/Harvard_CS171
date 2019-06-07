@@ -51,8 +51,7 @@ function createVisualization() {
 }
 
 function stats(dd,fd) {
-	console.log(dd);
-	console.log("Number of pizza deliveries :", dd.length);
+	f = "Number of pizza deliveries :"+ dd.length+"</br>";
 	count = 0;
 	avg_dtime = 0;
 	sales = 0;
@@ -68,11 +67,6 @@ function stats(dd,fd) {
 	b = "Average delivery time :"+avg_dtime/dd.length+"</br>";
 	c = "Total sales in USD :"+sales+"</br>";
 	d = "Number of all feedback entries :"+fd.length+"</br>";
-	console.log(a);
-	console.log(b);
-	console.log(c);
-	console.log(d);
-
 	fd.forEach(function(element){ // Display dataset summary
 		if(element.quality == "medium"){
 			count_med += 1;
@@ -85,7 +79,6 @@ function stats(dd,fd) {
 		}
 	});
 	e = "Number of feedback entries per quality category :"+" High:"+ count_high+ " Medium:"+ count_med+ " Low:"+ count_low+"</br>";
-	console.log(e);
-	result = a+b+c+d+e;
+	result = f+a+b+c+d+e;
 	document.getElementById("stats").innerHTML = result;
 }
