@@ -18,11 +18,41 @@ createVisualization();
 function createVisualization() {
 	dd = deliveryData;
 	fd = feedbackData;
-	stats(dd,fd)
+	stats(dd,fd);
+	var selectBox = document.getElementById("user-area");
+	var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+	console.log(selectedValue);
+	var selectBox2 = document.getElementById("user-order-type");
+	var selectedValue2 = selectBox2.options[selectBox2.selectedIndex].value;
+	console.log(selectedValue2);
+	dd = dd.filter(function(value){
+		if(selectedValue == "All"){
+			return selectedValue;
+		}
+		else if(value.area == selectedValue){
+			return selectedValue;
+		}
+		else {
+			return false;
+		}
+	})
+	dd = dd.filter(function(value){
+		if(selectedValue2 == "All"){
+			return selectedValue2;
+		}
+		else if(value.order_type == selectedValue2){
+			return selectedValue2;
+		}
+		else {
+			return false;
+		}
+	})
+
+	renderBarChart(dd);
 }
 
 function stats(dd,fd) {
-	console.log(fd);
+	console.log(dd);
 	console.log("Number of pizza deliveries :", dd.length);
 	count = 0;
 	avg_dtime = 0;
