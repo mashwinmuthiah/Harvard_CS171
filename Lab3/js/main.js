@@ -98,5 +98,27 @@ function renderScatter (d){
                         }
                         else return 8;
                     });
-                    
+    svg3.selectAll("rect")
+        .data(d)
+        .enter()
+        .append("text")
+        .text(function(d){
+            return d.city;
+        })
+        .attr("dx",function(d,index){
+            return d.x;
+        })
+        .attr("dy",function(d,index){
+            return d.y - 15;
+        })
+        .attr("opacity",function(d,index){
+            return d.population < 1000000 ? 0.00 : 1.00;
+        })
+        .attr("class","City-label");
+
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .html(function(d) { return d.toFixed(2) })
+            .direction('nw')
+            .offset([0, 3]);
 }
