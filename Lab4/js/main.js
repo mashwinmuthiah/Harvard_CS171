@@ -29,7 +29,7 @@ function typechange(data){
 }
 
 function renderChart(data){
-
+	// Chart rendering
 	data.sort(function(a,b){
 		return b.Population - a.Population;
 	})
