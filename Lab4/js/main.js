@@ -18,6 +18,7 @@ d3.csv("data/wealth-health-2014.csv", function(data){
 
 function typechange(data){ 
 	// Type converting Income , population and LifeExpectancy 
+
 	data.forEach(element => {
 		element["Income"] = parseFloat(element["Income"]);
 		element.LifeExpectancy = parseFloat(element.LifeExpectancy);
@@ -28,6 +29,10 @@ function typechange(data){
 }
 
 function renderChart(data){
+
+	data.sort(function(a,b){
+		return b.Population - a.Population;
+	})
 	var svg = d3.select("#chart-area")
 			.append("svg")
 			.attr("width",width)
@@ -46,12 +51,21 @@ function renderChart(data){
 	var radiusScale = d3.scaleLinear()
 			.domain([d3.min(data,function(d){ return d.Population }) - 5 ,d3.max(data,function(d){ return d.Population }) ])
 			.range([4,30]);
-	
+
+	var regions = [];
+	data.forEach(function(element){
+		regions.push(element.Region);
+	})
+	var colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+	colorScale.domain(regions);
 	svg.selectAll("circle")
 			.data(data)
 			.enter()
 			.append("circle")
-			.attr("fill","olive")
+			.attr("fill",function(d){
+				return colorScale(d.Region);
+			})
+			.attr("stroke","black")
 			.attr("cx",function(d){
 				return incomeScale(d.Income);
 			})
@@ -61,6 +75,9 @@ function renderChart(data){
 			.attr("r",function(d){
 				return radiusScale(d.Population);
 			})
+			.style("opacity", .6);
+
+
 	var xAxis = d3.axisBottom().scale(incomeScale)
 				.ticks(10);
 
