@@ -38,7 +38,7 @@ function renderChart(data){
 			.attr("width",width)
 			.attr("height",height);
 	
-	var incomeScale = d3.scaleLinear()
+	var incomeScale = d3.scaleLog()
 			.domain([d3.min(data,function(d){  return d.Income   }) - 100 ,d3.max(data,function(d){return d.Income}) - 100 ])
 			.range([padding , width - padding]);
 	console.log(incomeScale(5000));
@@ -95,13 +95,19 @@ function renderChart(data){
 			.attr("transform","translate(" + (padding) +",0)")
 			.call(yAxis);
 	
-	svg.append("g").append("text").text("Income")
+	svg.append("g").append("text").text("Log - Income per person (GDP per capita)")
 			.attr("class","x-axis-name")
-			.attr("y",height)
-			.attr("x",width/2)	
+			.attr("y",height-33)
+			.attr("x",40 + width/2)
+			.attr("fill","grey")
+			.style("font-size",16);
+
 	svg.append("g").append("text").text("Life Expectancy")
 			.attr("class","y-axis-name")
+			.attr("transform","translate(290,50) rotate(90)")
 			.attr("y",height/2)
-			.attr("x",0);
+			.attr("x",0)
+			.attr("fill","grey")
+			.style("font-size",16);;
 	
 }
