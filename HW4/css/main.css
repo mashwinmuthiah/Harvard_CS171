@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html,body{
+    height:100%;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 300;
+    background-color:rgb(255, 255, 255);
+}
+
+.wrap:before,.wrap:after {
+    content: "";
+    display: table; }
+
+.wrap:after {
+    clear: both; }
+
+.wrap {
+    max-width: 1300px;
+    padding: 0 20px;
+    margin: 0 auto;
+    zoom: 1; }
