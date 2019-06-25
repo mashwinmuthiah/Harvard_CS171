@@ -308,7 +308,7 @@ function RenderArea(data){ // Rendering Area Chart
         top : 30,
         right : 10,
         bottom : 115,
-        left : 90
+        left : 80
     };
 
     var width = 600 -margin.left - margin.right;
@@ -360,6 +360,7 @@ function RenderArea(data){ // Rendering Area Chart
         .attr("class", "Y-axis-line")
         .attr("transform","translate(45,0)")
         .call(Yaxis);
+
     
 }
 
