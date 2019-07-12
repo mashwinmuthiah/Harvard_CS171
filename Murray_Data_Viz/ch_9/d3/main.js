@@ -61,13 +61,15 @@ svg.selectAll("text")
 d3.select("p")
     .on("click", function() {
         //Do something on click
+        
         console.log("received");
         var numValues = dataset.length;						//Count original length of dataset
 					dataset = [];  						 				//Initialize empty array
 					for (var i = 0; i < numValues; i++) {				//Loop numValues times
-						var newNumber = Math.floor(Math.random() * 25); //New random integer (0-24)
+						var newNumber = Math.floor(Math.random() * 100); //New random integer (0-24)
 						dataset.push(newNumber);			 			//Add new number to array
-					}
+                    }
+        yScale.domain([0, d3.max(dataset)]);
         svg.selectAll("rect")
             .data(dataset)
             .transition()   
