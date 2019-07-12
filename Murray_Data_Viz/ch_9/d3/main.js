@@ -36,7 +36,8 @@ var svg = d3.select("#bar-area").append("svg")
     })
     .attr("fill", function(d) {
          return "rgb(0, 0, " + Math.round(d * 10) + ")";
-    });
+    })
+    .attr("opacity",1);
 
 //Create labels
 svg.selectAll("text")
@@ -61,12 +62,20 @@ d3.select("p")
     .on("click", function() {
         //Do something on click
         console.log("received");
-        dataset = [ 11, 12, 15, 20, 18, 17, 16, 18, 23, 25,
-            5, 10, 13, 19, 21, 25, 22, 18, 15, 13 ];
+        var numValues = dataset.length;						//Count original length of dataset
+					dataset = [];  						 				//Initialize empty array
+					for (var i = 0; i < numValues; i++) {				//Loop numValues times
+						var newNumber = Math.floor(Math.random() * 25); //New random integer (0-24)
+						dataset.push(newNumber);			 			//Add new number to array
+					}
         svg.selectAll("rect")
             .data(dataset)
             .transition()   
             .duration(1000)
+            .ease(d3.easeBounceOut)
+            .delay(function(d,i){
+                return i/dataset.length * 1000;
+            }) 
             .attr("y",function(d){
                 return h-yScale(d);
             })
@@ -75,8 +84,16 @@ d3.select("p")
             })
             .attr("fill", function(d) {   // <-- Down here!
                 return "rgb(0, 0, " + Math.round(d * 10) + ")";})
+
+
         svg.selectAll("text")
                 .data(dataset)
+                .transition()   
+                .duration(1000)
+                .ease(d3.easeBounceOut)
+                .delay(function(d,i){
+                    return i/dataset.length * 1000;
+                }) 
                 .text(function(d) {
                     return d;
                 })
