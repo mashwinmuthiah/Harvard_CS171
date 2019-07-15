@@ -1,10 +1,10 @@
 
 // SVG drawing area
 
-var margin = {top: 40, right: 10, bottom: 60, left: 60};
+var margin = { top: 40, right: 10, bottom: 60, left: 60 };
 
-var width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var width = 960 - margin.left - margin.right;
+var height = 500 - margin.top - margin.bottom;
 
 var svg = d3.select("#chart-area").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -15,12 +15,21 @@ var svg = d3.select("#chart-area").append("svg")
 
 // Scales
 var x = d3.scaleBand()
-    .rangeRound([0, width])
+    .rangeRound([0,width])
 	.paddingInner(0.1);
 
 var y = d3.scaleLinear()
-    .range([height, 0]);
+	.range([height,0]);
+	
+var yAxis = d3.axisLeft()
+	.scale(y);
+var yAxisGroup = svg.append("g")
+	.attr("class", "y-axis axis");
 
+var xAxis = d3.axisBottom()
+	.scale(x);
+var xAxisGroup = svg.append("g")
+    .attr("class", "x-axis axis");
 
 // Initialize data
 loadData();
@@ -55,26 +64,49 @@ function loadData() {
 		// see the definition above: Object.defineProperty(window, 'data', { ...
 	});
 }
+var ranks = d3.select("#ranking-type") .property("value")
+
+console.log(ranks);
+
+d3.select("#ranking-type").on("change",function(){
+	ranks = d3.select("#ranking-type") .property("value");
+	console.log(ranks);
+	updateVisualization()
+})
 
 // Render visualization
 function updateVisualization() {
 	console.log(data);
+	data.sort(function(a, b) { return b[ranks] - a[ranks]; });
 	x.domain(data.map(function(d){
 		return d.company;
 	}));
-	y.domain(data.map(function(d){
-		return d.stores;
-	}));
+	y.domain([0,d3.max(data.map(function(d){
+		return d[ranks];
+	}))]);
 
-	var rectangle = svg.selectAll("rect").data(data,function(d){return d;})
-		.enter()
+	svg.select(".y-axis")
+		.transition()
+		.duration(1000)
+		.call(yAxis);
+	
+	svg.select(".x-axis")
+		.transition()
+		.duration(1000)
+		.call(xAxis).attr("transform", "translate(" + 0 + "," + height +")");
+
+	var bars = svg.selectAll("rect")
+		.data(data,function(d){return d;});
+	
+	bars.enter()
 		.append("rect")
+		.attr("class","bar")
+		.transition()
+		.duration(1000)
 		.attr("x", function(d) { return x(d.company); })
-  		.attr("y", function(d) { return y(d.stores); })
+  		.attr("y", function(d) { return y(d[ranks]); })
   		.attr("width", x.bandwidth())
-		  .attr("height", function(d) { return height - y(d.stores); })
-		  .attr("class",". bar")
+		.attr("height", function(d) { return height - y(d[ranks]); });
 
-
-
+	bars.exit().remove();
 }
