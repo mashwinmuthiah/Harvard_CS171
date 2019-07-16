@@ -76,18 +76,28 @@ d3.select("#selection").on('change',function(){
 
 // Render visualization
 function updateVisualization() {
+	var s_d = d3.select("#startYear").property("value");
+	var e_d = d3.select("#EndYear").property("value");
+	s_d = +s_d;
+	e_d = +e_d;
+	console.log(s_d);
+	console.log(e_d);
 
-	console.log(data);
-	data.sort(function(a,b){
+	data2 = data.filter(function(d){
+		return formatDate(d.YEAR) >= s_d && formatDate(d.YEAR) <= e_d
+	})
+
+	console.log(data2);
+	data2.sort(function(a,b){
 		return formatDate(a.YEAR) - formatDate(b.YEAR);
 	})
 	// X scale domain
-	x.domain(data.map(function(d){
+	x.domain(data2.map(function(d){
 		return formatDate(d.YEAR);
 	}));
 
 	// Y scale domain
-	y.domain([0,d3.max(data,function(d){
+	y.domain([0,d3.max(data2,function(d){
 		return d[ranks];
 	})]);
 
@@ -100,7 +110,7 @@ function updateVisualization() {
 		return y(d[ranks]);
 	});	
 
-	var linePath = svg.selectAll(".line").data([data],function(d){
+	var linePath = svg.selectAll(".line").data([data2],function(d){
 		return d.year;
 	}); 
 
@@ -108,7 +118,8 @@ function updateVisualization() {
 	.attr("class", "line")
 	.merge(linePath)
 	.transition(t)
-	.attr("d",line(data));
+	.delay(1000)
+	.attr("d",line(data2));
 
 	linePath.exit().transition(t).remove();
 
@@ -119,7 +130,7 @@ function updateVisualization() {
 	//Drawing the circles for the tip
 
 	var circle = svg.selectAll("circle")
-		.data(data,function(d){
+		.data(data2,function(d){
 			return d.YEAR;
 		});
 
