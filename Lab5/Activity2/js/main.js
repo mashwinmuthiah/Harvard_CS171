@@ -77,7 +77,9 @@ d3.select("#ranking-type").on("change",function(){
 // Render visualization
 function updateVisualization() {
 	console.log(data);
+	var t= d3.transition().duration(1000);
 	data.sort(function(a, b) { return b[ranks] - a[ranks]; });
+
 	x.domain(data.map(function(d){
 		return d.company;
 	}));
@@ -85,28 +87,58 @@ function updateVisualization() {
 		return d[ranks];
 	}))]);
 
-	svg.select(".y-axis")
-		.transition()
-		.duration(1000)
+	yAxisGroup
+		.transition(t)
 		.call(yAxis);
 	
-	svg.select(".x-axis")
-		.transition()
-		.duration(1000)
+	xAxisGroup
+		.transition(t)
 		.call(xAxis).attr("transform", "translate(" + 0 + "," + height +")");
 
-	var bars = svg.selectAll("rect")
-		.data(data,function(d){return d;});
+	var rects = svg.selectAll("rect")
+		.data(data,function(d){return d.company});
+
+	rects.enter().append("rect")
+		.attr("class", "bar");
 	
-	bars.enter()
+	 // EXIT old elements not present in new data.
+	// rects.exit()
+    //     .attr("fill", "red")
+    // .transition(t)
+    //     .attr("y", y(0))
+    //     .attr("height", 0)
+	// 	.remove();
+		
+	// Update (set the dynamic properties of the elements)
+	// rect
+	// 	.transition()
+	// 	.duration(500)
+	// 	.attr("x", function(d) {
+	// 		return x(d.company);
+	// 	})
+	// 	.attr("y", function(d) {
+	// 		return y(d[ranks]);
+	// 	})
+	// 	.attr("width", x.bandwidth())
+	// 	.attr("height", function(d) {
+	// 		return height - y(d[ranks]);
+	// 	});
+
+	rects.enter()
 		.append("rect")
 		.attr("class","bar")
-		.transition()
-		.duration(1000)
-		.attr("x", function(d) { return x(d.company); })
-  		.attr("y", function(d) { return y(d[ranks]); })
-  		.attr("width", x.bandwidth())
-		.attr("height", function(d) { return height - y(d[ranks]); });
+            .attr("y", y(0))
+            .attr("height", 0)
+            .attr("x", function(d){ return x(d.company) })
+            .attr("width", x.bandwidth)
+            // AND UPDATE old elements present in new data.
+            .merge(rects)
+            .transition(t)
+                .attr("x", function(d){ return x(d.company) })
+                .attr("width", x.bandwidth)
+                .attr("y", function(d){ return y(d[ranks]); })
+                .attr("height", function(d){ return height - y(d[ranks]); });
 
-	bars.exit().remove();
+	// Exit
+	rects.exit().remove();	
 }
