@@ -4,6 +4,7 @@
  * @param _parentElement 	-- the HTML element in which to draw the visualization
  * @param _data						-- the  
  */
+    // Initialize time scale (x-axis)
 
 Timeline = function(_parentElement, _data){
     this.parentElement = _parentElement;
@@ -33,7 +34,7 @@ Timeline.prototype.initVis = function(){
 	    .attr("width", vis.width + vis.margin.left + vis.margin.right)
 	    .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
 	  .append("g")
-	    .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+        .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
 
 // Scales and axes
@@ -62,10 +63,21 @@ Timeline.prototype.initVis = function(){
         .attr("d", vis.area);
 
 
+    vis.xScale = d3.scaleTime()
+        .range([0, vis.width])
+        .domain(d3.extent(vis.displayData, function(d) { return d.Year; }));
+        
   // TO-DO: Initialize brush component
+  vis.brush = d3.brushX().extent([[0,0],[vis.width,vis.height]])
+    .on("brush",brushed);
 
   // TO-DO: Append brush component here
-
+  vis.svg.append("g")
+  .attr("class", "x brush")
+  .call(vis.brush)
+  .selectAll("rect")
+  .attr("y", -6)
+  .attr("height", vis.height + 7);
 
   vis.svg.append("g")
       .attr("class", "x-axis axis")

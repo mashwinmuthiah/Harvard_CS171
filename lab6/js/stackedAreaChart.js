@@ -40,7 +40,11 @@ StackedAreaChart.prototype.initVis = function(){
 	    .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
 	// TO-DO: Overlay with path clipping
-
+    vis.svg.append("defs").append("clipPath")
+        .attr("id", "clip")
+      .append("rect")
+        .attr("width", vis.width)
+        .attr("height", vis.height);
 
     // Scales and axes
     vis.x = d3.scaleTime()
@@ -64,20 +68,31 @@ StackedAreaChart.prototype.initVis = function(){
         .attr("class", "y-axis axis");
 
 
-	// TO-DO: Initialize stack layout
-	
-    // TO-DO: Rearrange data
+    // Initialize stack layout
+    var dataCategories = colorScale.domain();
+    var stack = d3.stack().keys(dataCategories);
 
-    // TO-DO: Stacked area layout
-	// vis.area = d3.area()
-	//	...
-
+    // Rearrange data
+    vis.stackedData = stack(vis.data);
+    // Stacked area layout
+    vis.area = d3.area()
+    .x(function(d) {
+      return vis.x(d.data.Year);
+    })
+    .y0(function(d) {
+      return vis.y(d[0]);
+    })
+    .y1(function(d) {
+      return vis.y(d[1]);
+    });
 
 	// TO-DO: Tooltip placeholder
+    vis.tooltip = vis.svg.append("text")
+        .attr("x",20)
+        .attr("y",0);
 
-
-	// TO-DO: (Filter, aggregate, modify data)
-    // vis.wrangleData();
+	// (Filter, aggregate, modify data)
+    vis.wrangleData();
 }
 
 
@@ -91,7 +106,6 @@ StackedAreaChart.prototype.wrangleData = function(){
 
 	// In the first step no data wrangling/filtering needed
 	vis.displayData = vis.stackedData;
-
 	// Update the visualization
     vis.updateVis();
 }
@@ -129,6 +143,12 @@ StackedAreaChart.prototype.updateVis = function(){
         })
         .attr("d", function(d) {
             return vis.area(d);
+        })
+        .on("mouseover",function(d,i){
+            vis.tooltip.text(dataCategories[i]);
+        })
+        .on("mouseout",function(d){
+            vis.tooltip.text(null);
         })
 
 

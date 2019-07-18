@@ -10,8 +10,6 @@ var colorScale = d3.scaleOrdinal(d3.schemeCategory20);
 
 // Variables for the visualization instances
 var areachart, timeline;
-
-
 // Start application by loading the data
 loadData();
 
@@ -39,7 +37,6 @@ function loadData() {
             // Update color scale (all column headers except "Year")
             // We will use the color scale later for the stacked area chart
             colorScale.domain(d3.keys(allData.layers[0]).filter(function(d){ return d != "Year"; }))
-
             createVis();
         }
     });
@@ -47,14 +44,21 @@ function loadData() {
 
 
 function createVis() {
-
+    console.log(allData);
 	// TO-DO: Instantiate visualization objects here
 	// areachart = new ...
     areachart = new StackedAreaChart("stacked-area-chart",allData.layers);
+    timeline = new Timeline("timeline",allData.years);
 }
 
 
 function brushed() {
 
-	// TO-DO: React to 'brushed' event
+    var selectionRange = d3.brushSelection(d3.select(".brush").node());
+    var selectionDomain = selectionRange.map(timeline.xScale.invert);
+
+    // console.log(selectionDomain);
+    areachart.x.domain(selectionDomain);
+    // TO-DO: React to 'brushed' event
+    areachart.wrangleData();
 }
