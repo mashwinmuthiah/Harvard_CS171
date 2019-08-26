@@ -39,7 +39,7 @@ StackedAreaChart.prototype.initVis = function(){
        .append("g")
 	    .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-	// TO-DO: Overlay with path clipping
+	// Overlay with path clipping
     vis.svg.append("defs").append("clipPath")
         .attr("id", "clip")
       .append("rect")
@@ -50,7 +50,7 @@ StackedAreaChart.prototype.initVis = function(){
     vis.x = d3.scaleTime()
         .range([0, vis.width])
         .domain(d3.extent(vis.data, function(d) { return d.Year; }));
-
+  
     vis.y = d3.scaleLinear()
         .range([vis.height, 0]);
 
@@ -105,7 +105,8 @@ StackedAreaChart.prototype.wrangleData = function(){
 	var vis = this;
 
 	// In the first step no data wrangling/filtering needed
-	vis.displayData = vis.stackedData;
+    vis.displayData = vis.stackedData;
+    console.log(vis.stackedData);
 	// Update the visualization
     vis.updateVis();
 }
@@ -118,8 +119,8 @@ StackedAreaChart.prototype.wrangleData = function(){
  */
 
 StackedAreaChart.prototype.updateVis = function(){
-	var vis = this;
-
+    var vis = this;
+    console.log(vis.x.domain);
 	// Update domain
 	// Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
 	vis.y.domain([0, d3.max(vis.displayData, function(d) {
@@ -130,7 +131,7 @@ StackedAreaChart.prototype.updateVis = function(){
 	]);
 
     var dataCategories = colorScale.domain();
-
+    
 // Draw the layers
     var categories = vis.svg.selectAll(".area")
         .data(vis.displayData);

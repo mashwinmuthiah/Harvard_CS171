@@ -57,7 +57,7 @@ function brushed() {
     var selectionRange = d3.brushSelection(d3.select(".brush").node());
     var selectionDomain = selectionRange.map(timeline.xScale.invert);
 
-    // console.log(selectionDomain);
+    //console.log(selectionDomain);
     areachart.x.domain(selectionDomain);
     // TO-DO: React to 'brushed' event
     areachart.wrangleData();
